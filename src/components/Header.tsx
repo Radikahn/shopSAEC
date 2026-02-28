@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
-import { Link } from '@tanstack/react-router'
-import ThemeToggle from './ThemeToggle'
 import SpinningLogo from './SpinningLogo'
+import { PiShoppingCartSimple } from 'react-icons/pi'
 
 export default function Header() {
   return (
@@ -23,6 +22,11 @@ export default function Header() {
         <Suspense fallback={<div className="w-10 h-10" />}>
           <SpinningLogo />
         </Suspense>
+      </div>
+      <div className="flex flex-1 justify-end mr-8">
+        <span className="text-3xl cursor-pointer">
+          <PiShoppingCartSimple />
+        </span>
       </div>
     </header>
   )

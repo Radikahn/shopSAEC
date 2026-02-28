@@ -5,9 +5,9 @@ export default function Footer() {
     <footer className="mt-20 border-t border-[var(--line)] px-4 pb-14 pt-10 text-[var(--sea-ink-soft)]">
       <div className="page-wrap flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
         <p className="m-0 text-sm">
-          &copy; {year} SAEC SJSU. All rights reserved.
+          &copy; {year} SJSU SAEC. All rights reserved.
         </p>
-        <p className="island-kicker m-0">Built with love by SJSU Students</p>
+        <p className="m-0 text-sm">Built with love by SJSU Students</p>
       </div>
       <div className="mt-4 flex justify-center gap-4">
         <a

@@ -5,14 +5,14 @@ export default function ItemFeature() {
   return (
     <div className="w-full h-full pb-8 overflow-hidden bg-blue-950-950/20 rounded-md border-2 border-blue-100/30">
       <div id="internal-header" className="p-4">
-        <span className="">SAEC - Club 33 Shirt</span>
+        <span className="">SAEC - Club 33 Tee</span>
       </div>
       <div
         id="product display"
         className="ml-4 mr-4 pl-4 pt-8 flex items-center border-2 border-blue-100/20"
       >
         <div id="left-details" className="pl-4 mr-4 pr-4 mb-8 ">
-          <div className="border-r border-blue-100/20 pr-4">
+          <div className="border-r border-blue-100/20 pr-8">
             <ItemDetails></ItemDetails>
 
             <div className="mt-20 flex flex-col">
