@@ -12,19 +12,19 @@ _ensure-network:
 
 # --- Frontend ---
 
-# Build the frontend Docker image
-frontend-build VITE_API_URL="http://localhost:8000":
-    docker build --build-arg VITE_API_URL={{VITE_API_URL}} -t saec-frontend .
+# Build the frontend Docker image (empty VITE_API_URL = same-origin for production)
+frontend-build VITE_API_URL="":
+    docker build --build-arg VITE_API_URL="{{VITE_API_URL}}" -t saec-frontend .
 
 # Run the frontend container
 frontend-run PORT="3000": _ensure-network
     docker run -d --name saec-frontend --network {{NETWORK}} -p {{PORT}}:3000 saec-frontend
 
 # Rebuild and restart the frontend
-frontend-rebuild VITE_API_URL="http://localhost:8000" PORT="3000":
+frontend-rebuild VITE_API_URL="" PORT="3000":
     -docker stop saec-frontend
     -docker rm saec-frontend
-    just frontend-build {{VITE_API_URL}}
+    just frontend-build "{{VITE_API_URL}}"
     just frontend-run {{PORT}}
 
 # --- Backend ---
@@ -62,15 +62,15 @@ mongo-restart:
 # --- All Services ---
 
 # Build all Docker images
-build-all VITE_API_URL="http://localhost:8000":
-    just frontend-build {{VITE_API_URL}}
+build-all VITE_API_URL="":
+    just frontend-build "{{VITE_API_URL}}"
     just backend-build
 
 # Start everything (mongo + backend + frontend)
-up VITE_API_URL="http://localhost:8000" BACKEND_PORT="7676" FRONTEND_PORT="3000" ENV_FILE=".env.local":
+up VITE_API_URL="" BACKEND_PORT="7676" FRONTEND_PORT="3000" ENV_FILE=".env.local":
     just mongo-up
     just backend-rebuild {{BACKEND_PORT}} {{ENV_FILE}}
-    just frontend-rebuild {{VITE_API_URL}} {{FRONTEND_PORT}}
+    just frontend-rebuild "{{VITE_API_URL}}" {{FRONTEND_PORT}}
 
 # Stop everything
 down:
@@ -79,9 +79,9 @@ down:
     just mongo-down
 
 # Rebuild and restart everything
-rebuild VITE_API_URL="http://localhost:8000" BACKEND_PORT="7676" FRONTEND_PORT="3000" ENV_FILE=".env.local":
-    just build-all {{VITE_API_URL}}
-    just up {{VITE_API_URL}} {{BACKEND_PORT}} {{FRONTEND_PORT}} {{ENV_FILE}}
+rebuild VITE_API_URL="" BACKEND_PORT="7676" FRONTEND_PORT="3000" ENV_FILE=".env.local":
+    just build-all "{{VITE_API_URL}}"
+    just up "{{VITE_API_URL}}" {{BACKEND_PORT}} {{FRONTEND_PORT}} {{ENV_FILE}}
 
 # --- Dev ---
 
