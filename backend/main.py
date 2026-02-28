@@ -19,7 +19,7 @@ app = FastAPI(title="SAEC Shop API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL, "http://localhost:3000"],
+    allow_origins=[settings.FRONTEND_URL, "http://localhost:3000", "https://shop.we-saec.me"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

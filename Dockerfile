@@ -8,6 +8,8 @@ RUN bun install --frozen-lockfile
 
 # Build
 FROM base AS build
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN bun run build

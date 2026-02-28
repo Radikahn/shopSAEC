@@ -5,8 +5,11 @@ services:
     ports:
       - '9090:27017'
     volumes:
-      - mongo-data:/data/db
+      - ./data:/data/db
+    networks:
+      - website-internal
     restart: unless-stopped
 
-volumes:
-  mongo-data:
+networks:
+  website-internal:
+    external: true
