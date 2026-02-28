@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { CartItem } from '#/components/MainPage/ItemFeature'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL || ''
 
 const affiliations = ['SJSU Student', 'SJSU Alumni', 'Friend of SAEC'] as const
 
