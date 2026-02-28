@@ -1,15 +1,26 @@
 import ChooseSize from './SubDetails/ChooseSize'
 import Quantity from './SubDetails/Quantity'
+import type { Size } from './SubDetails/ChooseSize'
 
-export default function ItemDetails() {
+export default function ItemDetails({
+  selectedSize,
+  onSelectSize,
+  quantity,
+  onQuantityChange,
+}: {
+  selectedSize: Size | null
+  onSelectSize: (size: Size) => void
+  quantity: number
+  onQuantityChange: (quantity: number) => void
+}) {
   return (
     <div className="h-full">
       <div className="border-b border-neutral-200/20 pb-2">
         <span>Configure:</span>
       </div>
-      <ChooseSize />
+      <ChooseSize selectedSize={selectedSize} onSelectSize={onSelectSize} />
       <div className="mt-4">
-        <Quantity />
+        <Quantity quantity={quantity} onQuantityChange={onQuantityChange} />
       </div>
     </div>
   )
