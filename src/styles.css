@@ -7,28 +7,6 @@
 }
 
 :root {
-  --sea-ink: #1a1a1a;
-  --sea-ink-soft: #555555;
-  --lagoon: #888888;
-  --lagoon-deep: #666666;
-  --palm: #333333;
-  --sand: #e0e0e0;
-  --foam: #ececec;
-  --surface: rgba(236, 236, 236, 0.74);
-  --surface-strong: rgba(242, 242, 242, 0.9);
-  --line: rgba(0, 0, 0, 0.12);
-  --inset-glint: rgba(255, 255, 255, 0.82);
-  --kicker: rgba(50, 50, 50, 0.9);
-  --bg-base: #e0e0e0;
-  --header-bg: rgba(236, 236, 236, 0.84);
-  --chip-bg: rgba(242, 242, 242, 0.8);
-  --chip-line: rgba(0, 0, 0, 0.15);
-  --link-bg-hover: rgba(242, 242, 242, 0.9);
-  --hero-a: rgba(160, 160, 160, 0.25);
-  --hero-b: rgba(80, 80, 80, 0.15);
-}
-
-:root[data-theme="dark"] {
   --sea-ink: #d0d0d0;
   --sea-ink-soft: #999999;
   --lagoon: #aaaaaa;
@@ -48,30 +26,7 @@
   --link-bg-hover: rgba(30, 30, 30, 0.8);
   --hero-a: rgba(150, 150, 150, 0.1);
   --hero-b: rgba(100, 100, 100, 0.08);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --sea-ink: #d0d0d0;
-    --sea-ink-soft: #999999;
-    --lagoon: #aaaaaa;
-    --lagoon-deep: #c0c0c0;
-    --palm: #888888;
-    --sand: #0a0a0a;
-    --foam: #111111;
-    --surface: rgba(18, 18, 18, 0.8);
-    --surface-strong: rgba(14, 14, 14, 0.92);
-    --line: rgba(255, 255, 255, 0.1);
-    --inset-glint: rgba(255, 255, 255, 0.08);
-    --kicker: #c0c0c0;
-    --bg-base: #080808;
-    --header-bg: rgba(10, 10, 10, 0.85);
-    --chip-bg: rgba(18, 18, 18, 0.9);
-    --chip-line: rgba(255, 255, 255, 0.14);
-    --link-bg-hover: rgba(30, 30, 30, 0.8);
-    --hero-a: rgba(150, 150, 150, 0.1);
-    --hero-b: rgba(100, 100, 100, 0.08);
-  }
+  color-scheme: dark;
 }
 
 * {
