@@ -22,3 +22,7 @@ def get_db():
 
 def get_orders_collection():
     return get_db()["orders"]
+
+
+def get_stock_collection():
+    return get_db()["stock"]

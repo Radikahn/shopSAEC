@@ -1,15 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import ItemDetails from './ItemDetails'
 import ProductFeature from './ProductFeature'
+import type { CartItem } from '#/types/cart'
 import type { Size } from './SubDetails/ChooseSize'
 
-export interface CartItem {
-  item: string
-  size: Size
-  quantity: number
-  price: number
-}
+const API_URL = import.meta.env.VITE_API_URL || ''
+
+export type { CartItem }
 
 const ITEM_NAME = 'Club 33 Tee'
 const ITEM_PRICE = 30
@@ -18,7 +16,21 @@ export default function ItemFeature() {
   const [selectedSize, setSelectedSize] = useState<Size | null>(null)
   const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
+  const [stock, setStock] = useState<Record<string, number> | null>(null)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/stock`)
+      .then((res) => res.json())
+      .then((data: { size: string; count: number }[]) => {
+        const map: Record<string, number> = {}
+        for (const item of data) {
+          map[item.size] = item.count
+        }
+        setStock(map)
+      })
+      .catch(() => {})
+  }, [])
 
   function addToCart() {
     if (!selectedSize) return
@@ -53,12 +65,14 @@ export default function ItemFeature() {
               onSelectSize={setSelectedSize}
               quantity={quantity}
               onQuantityChange={setQuantity}
+              stock={stock}
             />
 
             <div className="mt-10 lg:mt-20 flex flex-col">
               <button
+                suppressHydrationWarning
                 onClick={addToCart}
-                disabled={!selectedSize}
+                disabled={selectedSize === null}
                 className={`px-8 py-2 border rounded-4xl transition-all duration-300 cursor-pointer ${
                   added
                     ? 'bg-green-500/30 border-green-400/40'

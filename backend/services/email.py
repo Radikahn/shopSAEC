@@ -6,7 +6,9 @@ from models import CartItemSchema
 resend.api_key = settings.RESEND_API_KEY
 
 
-def build_confirmation_html(order_id: str, cart_item: CartItemSchema, total: int) -> str:
+def build_confirmation_html(
+    order_id: str, cart_item: CartItemSchema, total: int
+) -> str:
     short_id = order_id[-6:].upper()
     return f"""\
 <!DOCTYPE html>
@@ -98,7 +100,7 @@ def build_confirmation_html(order_id: str, cart_item: CartItemSchema, total: int
         <!-- Footer -->
         <tr><td style="padding:24px;border-top:1px solid rgba(191,219,254,0.1);text-align:center;">
           <span style="font-size:11px;color:#555;">
-            SJSU Society of Automotive Engineers Club
+            SJSU Spartan Automotive Enthusiasts Club
           </span>
         </td></tr>
 
