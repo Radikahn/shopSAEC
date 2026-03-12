@@ -20,7 +20,7 @@ function ManagerPage() {
     setError('')
 
     try {
-      const res = await fetch(`${API_URL}/api/manager/login`, {
+      const res = await fetch(`${API_URL}/api/manager/login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),

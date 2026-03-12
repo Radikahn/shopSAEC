@@ -20,7 +20,7 @@ export default function ItemFeature() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch(`${API_URL}/api/stock`)
+    fetch(`${API_URL}/api/stock/`)
       .then((res) => res.json())
       .then((data: { size: string; count: number }[]) => {
         const map: Record<string, number> = {}

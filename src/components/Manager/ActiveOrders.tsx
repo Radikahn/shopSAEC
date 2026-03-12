@@ -30,7 +30,7 @@ export default function ActiveOrders({ password }: { password: string }) {
 
   async function fetchOrders() {
     try {
-      const res = await fetch(`${API_URL}/api/orders`)
+      const res = await fetch(`${API_URL}/api/orders/`)
       if (res.ok) {
         const data = await res.json()
         setOrders(data)
