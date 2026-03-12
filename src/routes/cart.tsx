@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import type { CartItem } from '#/components/MainPage/ItemFeature'
+import type { CartItem } from '#/types/cart'
 
 const API_URL = import.meta.env.VITE_API_URL || ''
 
@@ -8,6 +8,7 @@ const affiliations = ['SJSU Student', 'SJSU Alumni', 'Friend of SAEC'] as const
 
 export const Route = createFileRoute('/cart')({
   component: CartPage,
+  ssr: false,
 })
 
 function CartPage() {
@@ -25,7 +26,10 @@ function CartPage() {
   const [policyExpanded, setPolicyExpanded] = useState(false)
 
   const formComplete =
-    email.trim() !== '' && phone.trim() !== '' && venmoUsername.trim() !== '' && affiliation !== ''
+    email.trim() !== '' &&
+    phone.trim() !== '' &&
+    venmoUsername.trim() !== '' &&
+    affiliation !== ''
 
   useEffect(() => {
     const stored = localStorage.getItem('saec_cart')
@@ -54,7 +58,7 @@ function CartPage() {
     setError(null)
 
     try {
-      const res = await fetch(`${API_URL}/api/orders`, {
+      const res = await fetch(`${API_URL}/api/orders/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -68,9 +72,7 @@ function CartPage() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
-        throw new Error(
-          data.detail || `Failed to save order (${res.status})`,
-        )
+        throw new Error(data.detail || `Failed to save order (${res.status})`)
       }
 
       openVenmo()
@@ -158,7 +160,7 @@ function CartPage() {
 
             <div className="mt-4 flex flex-row items-start gap-4 sm:gap-6">
               <img
-                src="/CLEAN.png"
+                src="/CLEAN.webp"
                 alt={cartItem.item}
                 className="w-24 sm:w-32 rounded-md border border-blue-100/20"
               />
@@ -173,8 +175,7 @@ function CartPage() {
                   </span>
                   <span className="mt-1">Qty: {cartItem.quantity}</span>
                   <span className="mt-1">
-                    ${cartItem.price}.00{' '}
-                    {cartItem.quantity > 1 ? 'each' : ''}
+                    ${cartItem.price}.00 {cartItem.quantity > 1 ? 'each' : ''}
                   </span>
                 </div>
               </div>
@@ -229,7 +230,7 @@ function CartPage() {
                   type="text"
                   value={venmoUsername}
                   onChange={(e) => setVenmoUsername(e.target.value)}
-                  placeholder="@your-venmo"
+                  placeholder="your venmo"
                   className="px-3 py-2 bg-neutral-200/10 border border-neutral-200/20 rounded-md text-sm focus:outline-none focus:border-blue-400/50"
                 />
               </div>
@@ -277,7 +278,8 @@ function CartPage() {
             )}
             {formComplete && !submitting && (
               <span className="text-xs opacity-50">
-                You will be redirected to Venmo to complete payment to @sjsu_saec
+                You will be redirected to Venmo to complete payment to
+                @sjsu_saec
               </span>
             )}
             {error && <span className="text-sm text-red-400">{error}</span>}

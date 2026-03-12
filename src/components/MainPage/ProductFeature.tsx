@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const images = ['/CLEAN.png', '/CLEAN_BACK.png']
+const images = ['/CLEAN.webp', '/CLEAN_BACK.webp']
 
 export default function ProductFeature() {
   const [current, setCurrent] = useState(0)

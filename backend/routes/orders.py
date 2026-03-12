@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException
 
-from db import get_orders_collection
+from db import get_orders_collection, get_stock_collection
 from models import OrderCreate, OrderResponse, OrderUpdate
 from services.email import send_confirmation_email
 
@@ -30,6 +30,16 @@ async def create_order(order: OrderCreate):
     order_dict["total"] = order.cart_item.price * order.cart_item.quantity
     order_dict["status"] = "pending"
     order_dict["created_at"] = datetime.now(timezone.utc)
+
+    stock = get_stock_collection()
+    stock_doc = await stock.find_one({"size": order.cart_item.size.value})
+    if not stock_doc or stock_doc["count"] < order.cart_item.quantity:
+        raise HTTPException(status_code=400, detail="Not enough stock for this size")
+
+    await stock.update_one(
+        {"size": order.cart_item.size.value},
+        {"$inc": {"count": -order.cart_item.quantity}},
+    )
 
     collection = get_orders_collection()
     result = await collection.insert_one(order_dict)

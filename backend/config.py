@@ -1,6 +1,10 @@
+import os
 from pathlib import Path
 
 from pydantic_settings import BaseSettings
+
+_root = Path(__file__).resolve().parent.parent
+_env_file = str(_root / ".env.dev") if os.getenv("ENV", "dev") == "dev" else str(_root / ".env.local")
 
 
 class Settings(BaseSettings):
@@ -9,9 +13,10 @@ class Settings(BaseSettings):
     RESEND_API_KEY: str = ""
     RESEND_FROM_EMAIL: str = "SAEC Shop <orders@we-saec.me>"
     FRONTEND_URL: str = "http://localhost:3000"
+    MANAGER_PASSWORD: str = ""
 
     model_config = {
-        "env_file": str(Path(__file__).resolve().parent.parent / ".env.local"),
+        "env_file": _env_file,
         "env_file_encoding": "utf-8",
         "extra": "ignore",
     }
