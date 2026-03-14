@@ -38,5 +38,3 @@ app.include_router(stock_router, prefix="/api/stock", tags=["stock"])
 app.include_router(manager_router, prefix="/api/manager", tags=["manager"])
 
 
-if __name__ == "__main__":
-    uvicor
