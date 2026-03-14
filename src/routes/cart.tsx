@@ -24,6 +24,7 @@ function CartPage() {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [policyExpanded, setPolicyExpanded] = useState(false)
+  const [venmoUrl, setVenmoUrl] = useState('')
 
   const formComplete =
     email.trim() !== '' &&
@@ -44,12 +45,11 @@ function CartPage() {
     setCartItem(null)
   }
 
-  function openVenmo() {
-    if (!cartItem) return
+  function getVenmoUrl() {
+    if (!cartItem) return ''
     const total = cartItem.price * cartItem.quantity
     const note = `SAEC ${cartItem.item} - Size ${cartItem.size} x${cartItem.quantity}`
-    const venmoUrl = `https://venmo.com/sjsu_saec?txn=pay&amount=${total}&note=${encodeURIComponent(note)}`
-    window.open(venmoUrl, '_blank')
+    return `https://venmo.com/sjsu_saec?txn=pay&amount=${total}&note=${encodeURIComponent(note)}`
   }
 
   async function handleCheckout() {
@@ -75,7 +75,9 @@ function CartPage() {
         throw new Error(data.detail || `Failed to save order (${res.status})`)
       }
 
-      openVenmo()
+      const url = getVenmoUrl()
+      setVenmoUrl(url)
+      window.open(url, '_blank')
       setSubmitted(true)
       localStorage.removeItem('saec_cart')
     } catch (err) {
@@ -109,9 +111,19 @@ function CartPage() {
               <br />
               Complete your payment via Venmo to @sjsu_saec.
             </span>
+            {venmoUrl && (
+              <a
+                href={venmoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-2 bg-[#008CFF]/20 border border-[#008CFF]/30 hover:bg-[#008CFF]/30 rounded-4xl transition-all duration-300 text-center text-sm"
+              >
+                Pay with Venmo
+              </a>
+            )}
             <button
               onClick={() => navigate({ to: '/' })}
-              className="mt-4 px-8 py-2 bg-neutral-200/20 border border-neutral-50/20 hover:bg-neutral-100/30 rounded-4xl transition-all duration-300 cursor-pointer"
+              className="mt-2 px-8 py-2 bg-neutral-200/20 border border-neutral-50/20 hover:bg-neutral-100/30 rounded-4xl transition-all duration-300 cursor-pointer"
             >
               Back to Shop
             </button>
